@@ -48,6 +48,9 @@ setup(
         'invenio_search.templates': [
             'invenio_oarepo_invenio_model = invenio_oarepo_invenio_model.templates:get_templates',
         ],
+        'invenio_jsonschemas.schemas': [
+            'invenio_oarepo_invenio_model = invenio_oarepo_invenio_model.jsonschemas'
+        ],
     },
     include_package_data=True,
     setup_requires=setup_requires,
