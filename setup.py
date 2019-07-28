@@ -45,6 +45,9 @@ setup(
     zip_safe=False,
     packages=['invenio_oarepo_invenio_model'],
     entry_points={
+        'invenio_oarepo_mapping_includes': [
+            'invenio_oarepo_invenio_model=invenio_oarepo_invenio_model.included_mappings'
+        ],
         'invenio_search.templates': [
             'invenio_oarepo_invenio_model = invenio_oarepo_invenio_model.templates:get_templates',
         ],
