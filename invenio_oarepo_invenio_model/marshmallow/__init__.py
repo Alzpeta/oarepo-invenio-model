@@ -9,7 +9,7 @@
 
 from __future__ import absolute_import, print_function
 
-from marshmallow import fields, missing
+from marshmallow import fields, missing, Schema
 
 
 # noinspection PyUnusedLocal
@@ -19,14 +19,8 @@ def get_id(obj, context):
     return pid.pid_value if pid else missing
 
 
-class InvenioRecordSchemaV1Mixin:
+class InvenioRecordSchemaV1Mixin(Schema):
     """Invenio record"""
-
-    # noinspection PyUnusedLocal
-    def get_id(self, obj):
-        """Get record id."""
-        pid = self.context.get('pid')
-        return pid.pid_value if pid else missing
 
     id = fields.Function(
         serialize=get_id,
