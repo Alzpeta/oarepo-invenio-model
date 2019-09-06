@@ -9,7 +9,10 @@
 
 from __future__ import absolute_import, print_function
 
-from marshmallow import fields, missing, Schema
+import json
+import uuid
+
+from marshmallow import fields, missing, Schema, pre_load
 
 
 # noinspection PyUnusedLocal
@@ -22,6 +25,27 @@ def get_id(obj, context):
 class InvenioRecordSchemaV1Mixin(Schema):
     """Invenio record"""
 
-    id = fields.Function(
-        serialize=get_id,
-        deserialize=get_id)
+    id = fields.String(required=True, validate=[lambda x: uuid.UUID(x)])
+    _bucket = fields.String(required=False)
+    _files = fields.Raw(dump_only=True)
+
+    @pre_load
+    def handle_load(self, instance):
+        instance.pop('_files', None)
+
+        #
+        # modified handling id from default invenio way:
+        #
+        # we need to use the stored id in dump (in case the object
+        # is referenced, the id should be the stored one, not the context one)
+        #
+        # for data loading, we need to overwrite the id by the context - to be sure no one
+        # is trying to overwrite the id
+        #
+        id_ = get_id(instance, self.context)
+        if id_ is not missing:
+            instance['id'] = id_
+        else:
+            instance.pop('id', None)
+        print(json.dumps(instance, indent=4))
+        return instance

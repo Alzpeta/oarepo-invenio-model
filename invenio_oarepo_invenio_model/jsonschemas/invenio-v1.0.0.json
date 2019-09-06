@@ -11,6 +11,19 @@
                 "$schema": {
                     "description": "Invenio json schema.",
                     "type": "string"
+                },
+                "_bucket": {
+                    "description": "Invenio-files bucket ID",
+                    "type": "string"
+                },
+                "_files": {
+                    "description": "Invenio-files serialized files",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true
+                    }
                 }
             }
         }
