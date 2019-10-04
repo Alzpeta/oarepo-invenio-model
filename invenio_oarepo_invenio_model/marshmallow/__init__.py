@@ -12,7 +12,12 @@ from __future__ import absolute_import, print_function
 import json
 import uuid
 
-from marshmallow import fields, missing, Schema, pre_load
+from invenio_files_rest.models import ObjectVersion
+try:
+    from invenio_iiif.utils import ui_iiif_image_url
+except ImportError:
+    ui_iiif_image_url = None
+from marshmallow import fields, missing, Schema, pre_load, post_dump
 
 
 # noinspection PyUnusedLocal
@@ -49,3 +54,13 @@ class InvenioRecordSchemaV1Mixin(Schema):
             instance.pop('id', None)
         print(json.dumps(instance, indent=4))
         return instance
+
+    @post_dump
+    def handle_post_dump(self, instance):
+        if ui_iiif_image_url:
+            files = instance.get('_files', [])
+            for f in files:
+                img_obj = ObjectVersion.get(bucket=f['bucket'], version_id=f['version_id'], key=f['key'])
+                image_url = ui_iiif_image_url(obj=img_obj, version='v2', region='full',
+                                              size='full', rotation=0, quality='default', image_format='png')
+                f['iiif'] = image_url.split('/full/full/0')[0] + '/'
