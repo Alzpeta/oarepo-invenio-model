@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2019 CESNET.
+#
+# Invenio OpenID Connect is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
+notifications:
+  email: false
+
+sudo: false
+
+language: python
+
+matrix:
+  fast_finish: true
+
+cache:
+  - pip
+
+env:
+  global:
+    - POSTGRESQL_SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://postgres@localhost:5432/invenio"
+    - ES6_DOWNLOAD_URL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.0.tar.gz"
+    - ES7_DOWNLOAD_URL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-linux-x86_64.tar.gz"
+    - ES_HOST=127.0.0.1
+  matrix:
+    - REQUIREMENTS=release OAREPO_VERSION=3.1.1 ES=$ES6_DOWNLOAD_URL EXTRAS=postgresql,tests SQLALCHEMY_DATABASE_URI=$POSTGRESQL_SQLALCHEMY_DATABASE_URI
+    - REQUIREMENTS=release OAREPO_VERSION=3.2.0 ES=$ES6_DOWNLOAD_URL EXTRAS=postgresql,tests SQLALCHEMY_DATABASE_URI=$POSTGRESQL_SQLALCHEMY_DATABASE_URI
+    - REQUIREMENTS=release OAREPO_VERSION=3.2.0 ES=$ES6_DOWNLOAD_URL EXTRAS=sqlite,tests
+    - REQUIREMENTS=release OAREPO_VERSION=3.2.0 ES=$ES7_DOWNLOAD_URL EXTRAS=postgresql,tests-es7 SQLALCHEMY_DATABASE_URI=$POSTGRESQL_SQLALCHEMY_DATABASE_URI
+    - REQUIREMENTS=release OAREPO_VERSION=3.2.0 ES=$ES7_DOWNLOAD_URL EXTRAS=sqlite,tests-es7
+
+python:
+  - "3.7"
+  - "3.8"
+
+before_install:
+  - "travis_retry pip install --upgrade pip setuptools py"
+  - "travis_retry pip install twine wheel coveralls requirements-builder pip-tools"
+  - "requirements-builder -e $EXTRAS --level=pypi setup.py > .travis-release-requirements.in"
+  - "pip-compile -U --verbose -o .travis-release-requirements.txt .travis-release-requirements.in"
+  - cat .travis-release-requirements.txt
+  - mkdir /tmp/elasticsearch
+  - wget -O - $ES | tar xz --directory=/tmp/elasticsearch --strip-components=1
+  - "/tmp/elasticsearch/bin/elasticsearch &"
+  - sleep 10
+
+install:
+  - "travis_retry pip install -r .travis-${REQUIREMENTS}-requirements.txt"
+  - "travis_retry pip install -e .[$EXTRAS]"
+
+script:
+  - "./run-tests.sh"
+
+after_success:
+  - coveralls
+
+deploy:
+  provider: pypi
+  user: "__token__"
+  password:
+    secure: "jEts6hf9AnPA5L/s1O8ukz4iIMMCOWG7iLFUsdGUBJLPiuXzS3WpecEsHdpCaRtsDBmVlHje/heU1qu/VwzDtWcCJq9KZeAkYPZwkm0meyjYekOuYRmjqS3bsBkhyKsFpgj8fzEnp1V/6kNe/Jv0sR/uAlzpNVAcvddQJbMjNEy9X+hXRVNDHZ3xs8ovBDV4rfu4qI+ShISUyefSeldCWUj8a1tLFjP5gz0ZcE+QE7VFA2Bg9HlkUaehGbESy+uXzQ2cuff9269937HSjX1ZMOsdTx/RYHo6lvrI2cz/SvuTnTRvDgqlnzMrNWKkXx0FtROIS5+TlQlAJfwyIfD6AOyUCuc+LwDxxs+CJ3sc45recIAbce8DudwusP1edPE8kXjNcAQGTcH/3hChOplPqx+PRiMT+5opYpzimNvKE+72xTElShafWasCMkoa5QUzAWTd/0kJbaJWf4SkLliyFYRXcD3fYeU2WAJf96F0KaEI9rpjklJQGzHsPUIR7IGn53tFV+P9668S+GQdfTBtuIv2lFDH34GkCxIDaogoZvdeGE3vqgOxijv9zZ1beFwsOJUX8SwWHL6FGpfwQjRkVglwGDBXzFkH0zkssjRSe0aFB+qDZ84xqUU8UVY2oJtND99J/hPUhO6flABlErHM2UT0EArp3e/C2jo2Hpvlvrw="
+  on:
+    tags: true
+    branch: master
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
