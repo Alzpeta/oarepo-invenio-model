@@ -2,20 +2,20 @@
 OARepo Invenio data model
 ===============================
 
-.. image:: https://img.shields.io/github/license/oarepo/oarepo-invneio.svg
-        :target: https://github.com/oarepo/oarepo-invneio/blob/master/LICENSE
+.. image:: https://img.shields.io/github/license/oarepo/invenio-oarepo-invenio-model.svg
+        :target: https://github.com/oarepo/invenio-oarepo-invenio-model/blob/master/LICENSE
 
-.. image:: https://img.shields.io/travis/oarepo/oarepo-invneio.svg
-        :target: https://travis-ci.org/oarepo/oarepo-invneio
+.. image:: https://img.shields.io/travis/oarepo/invenio-oarepo-invenio-model.svg
+        :target: https://travis-ci.org/oarepo/invenio-oarepo-invenio-model
 
-.. image:: https://img.shields.io/coveralls/oarepo/oarepo-invneio.svg
-        :target: https://coveralls.io/r/oarepo/oarepo-invneio
+.. image:: https://img.shields.io/coveralls/oarepo/invenio-oarepo-invenio-model.svg
+        :target: https://coveralls.io/r/oarepo/invenio-oarepo-invenio-model
 
-.. image:: https://img.shields.io/pypi/v/oarepo-invneio.svg
-        :target: https://pypi.org/pypi/oarepo-invneio
+.. image:: https://img.shields.io/pypi/v/invenio-oarepo-dc.svg
+        :target: https://pypi.org/pypi/invenio-oarepo-dc
 
 
-DC Terms data model for oarepo.
+Invenio base record model.
 
 
 Quickstart
