@@ -12,8 +12,7 @@ from __future__ import absolute_import, print_function
 import json
 import uuid
 
-from invenio_files_rest.models import ObjectVersion
-from marshmallow import fields, missing, Schema, pre_load, post_dump
+from marshmallow import Schema, fields, missing, pre_load
 
 
 # noinspection PyUnusedLocal
