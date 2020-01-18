@@ -4,7 +4,10 @@ import pytest
 from invenio_pidstore.models import PersistentIdentifier
 from marshmallow import ValidationError
 
-from invenio_oarepo_invenio_model.marshmallow import InvenioRecordSchemaV1Mixin
+from invenio_oarepo_invenio_model.marshmallow import (
+    InvenioRecordSchemaV1Mixin,
+    InvenioRecordMetadataSchemaV1Mixin
+)
 from tests.helpers import marshmallow_load
 
 
@@ -34,3 +37,7 @@ def test_load_files():
     }), {'_files': []}) == {
                'id': str(pid.object_uuid)
            }
+
+
+def test_metadata():
+    marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(), {'$schema': 'http://blah'})

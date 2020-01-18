@@ -9,10 +9,22 @@
 
 from __future__ import absolute_import, print_function
 
-import json
 import uuid
 
+from invenio_records_rest.schemas.fields import SanitizedUnicode
 from marshmallow import Schema, fields, missing, pre_load
+
+try:
+    from marshmallow import __version_info__ as marshmallow_version
+except:
+    marshmallow_version = (2, 'x')
+
+if marshmallow_version[0] >= 3:
+    def load_dump(x):
+        return dict(data_key=x)
+else:
+    def load_dump(x):
+        return dict(load_from=x, dump_to=x)
 
 
 # noinspection PyUnusedLocal
@@ -22,12 +34,17 @@ def get_id(obj, context):
     return pid.object_uuid if pid else missing
 
 
+class InvenioRecordMetadataSchemaV1Mixin(Schema):
+    schema = SanitizedUnicode(required=False, attribute='$schema', **load_dump('$schema'))
+
+
 class InvenioRecordSchemaV1Mixin(Schema):
     """Invenio record"""
 
     id = fields.String(required=True, validate=[lambda x: uuid.UUID(x)])
     _bucket = fields.String(required=False)
     _files = fields.Raw(dump_only=True)
+    metadata = fields.Nested(InvenioRecordMetadataSchemaV1Mixin, required=False)
 
     @pre_load
     def handle_load(self, instance, **kwargs):
