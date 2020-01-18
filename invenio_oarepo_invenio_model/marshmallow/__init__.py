@@ -30,7 +30,7 @@ class InvenioRecordSchemaV1Mixin(Schema):
     _files = fields.Raw(dump_only=True)
 
     @pre_load
-    def handle_load(self, instance):
+    def handle_load(self, instance, **kwargs):
         instance.pop('_files', None)
 
         #
