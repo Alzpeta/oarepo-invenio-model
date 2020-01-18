@@ -6,7 +6,7 @@ from marshmallow import ValidationError
 
 from invenio_oarepo_invenio_model.marshmallow import (
     InvenioRecordMetadataSchemaV1Mixin,
-    InvenioRecordSchemaV1Mixin
+    InvenioRecordSchemaV1Mixin,
 )
 from tests.helpers import marshmallow_load
 
