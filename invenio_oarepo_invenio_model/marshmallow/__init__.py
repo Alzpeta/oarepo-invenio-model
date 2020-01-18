@@ -19,7 +19,7 @@ from marshmallow import Schema, fields, missing, pre_load
 def get_id(obj, context):
     """Get record id."""
     pid = context.get('pid')
-    return pid.pid_value if pid else missing
+    return pid.object_uuid if pid else missing
 
 
 class InvenioRecordSchemaV1Mixin(Schema):
@@ -44,8 +44,7 @@ class InvenioRecordSchemaV1Mixin(Schema):
         #
         id_ = get_id(instance, self.context)
         if id_ is not missing:
-            instance['id'] = id_
+            instance['id'] = str(id_)
         else:
             instance.pop('id', None)
-        print(json.dumps(instance, indent=4))
         return instance
