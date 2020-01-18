@@ -5,8 +5,8 @@ from invenio_pidstore.models import PersistentIdentifier
 from marshmallow import ValidationError
 
 from invenio_oarepo_invenio_model.marshmallow import (
-    InvenioRecordSchemaV1Mixin,
-    InvenioRecordMetadataSchemaV1Mixin
+    InvenioRecordMetadataSchemaV1Mixin,
+    InvenioRecordSchemaV1Mixin
 )
 from tests.helpers import marshmallow_load
 
