@@ -31,20 +31,14 @@ else:
 def get_id(obj, context):
     """Get record id."""
     pid = context.get('pid')
-    return pid.object_uuid if pid else missing
+    return pid.pid_value if pid else missing
 
 
 class InvenioRecordMetadataSchemaV1Mixin(Schema):
     schema = SanitizedUnicode(required=False, attribute='$schema', **load_dump('$schema'))
-
-
-class InvenioRecordSchemaV1Mixin(Schema):
-    """Invenio record"""
-
-    id = fields.String(required=True, validate=[lambda x: uuid.UUID(x)])
     _bucket = fields.String(required=False)
     _files = fields.Raw(dump_only=True)
-    metadata = fields.Nested(InvenioRecordMetadataSchemaV1Mixin, required=False)
+    id = fields.String(required=False)
 
     @pre_load
     def handle_load(self, instance, **kwargs):
@@ -65,3 +59,10 @@ class InvenioRecordSchemaV1Mixin(Schema):
         else:
             instance.pop('id', None)
         return instance
+
+
+class InvenioRecordSchemaV1Mixin(Schema):
+    """Invenio record"""
+
+    id = fields.String(required=True)
+    metadata = fields.Nested(InvenioRecordMetadataSchemaV1Mixin, required=False)

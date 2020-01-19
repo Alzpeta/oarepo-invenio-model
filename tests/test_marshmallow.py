@@ -17,25 +17,24 @@ def test_load_no_id():
 
 
 def test_load_no_id_in_context():
-    with pytest.raises(ValidationError):
-        marshmallow_load(InvenioRecordSchemaV1Mixin(), {'id': '1'})
+    marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(), {'id': '1'}) == {}
 
 
 def test_load_id_in_context():
-    pid = PersistentIdentifier(object_uuid=uuid1())
-    assert marshmallow_load(InvenioRecordSchemaV1Mixin(context={
+    pid = PersistentIdentifier(object_uuid=uuid1(), pid_value='1')
+    assert marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(context={
         'pid': pid
     }), {}) == {
-               'id': str(pid.object_uuid)
+               'id': pid.pid_value
            }
 
 
 def test_load_files():
-    pid = PersistentIdentifier(object_uuid=uuid1())
-    assert marshmallow_load(InvenioRecordSchemaV1Mixin(context={
+    pid = PersistentIdentifier(object_uuid=uuid1(), pid_value='1')
+    assert marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(context={
         'pid': pid
     }), {'_files': []}) == {
-               'id': str(pid.object_uuid)
+               'id': pid.pid_value
            }
 
 
