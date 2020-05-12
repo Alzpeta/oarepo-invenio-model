@@ -11,10 +11,8 @@ from __future__ import absolute_import, print_function
 
 from invenio_records_rest.schemas.fields import GenFunction, PersistentIdentifier
 from invenio_rest.serializer import BaseSchema as Schema
-
-
 # noinspection PyUnusedLocal
-from marshmallow import pre_load, fields, missing
+from marshmallow import fields, missing, pre_load
 
 
 def schema_from_context(_, context):
