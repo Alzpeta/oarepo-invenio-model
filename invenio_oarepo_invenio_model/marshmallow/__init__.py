@@ -9,25 +9,32 @@
 
 from __future__ import absolute_import, print_function
 
-import uuid
-
-from invenio_records_rest.schemas.fields import SanitizedUnicode
-from marshmallow import Schema, fields, missing, pre_load
-
-try:
-    from marshmallow import __version_info__ as marshmallow_version
-except:
-    marshmallow_version = (2, 'x')
-
-if marshmallow_version[0] >= 3:
-    def load_dump(x):
-        return dict(data_key=x)
-else:
-    def load_dump(x):
-        return dict(load_from=x, dump_to=x)
+from invenio_records_rest.schemas.fields import GenFunction, PersistentIdentifier
+from invenio_rest.serializer import BaseSchema as Schema
 
 
 # noinspection PyUnusedLocal
+from marshmallow import pre_load, fields, missing
+
+
+def schema_from_context(_, context):
+    """Get the record's schema from context."""
+    record = (context or {}).get('record', {})
+    return record.get("_schema", missing)
+
+
+def bucket_from_context(_, context):
+    """Get the record's bucket from context."""
+    record = (context or {}).get('record', {})
+    return record.get('_bucket', missing)
+
+
+def files_from_context(_, context):
+    """Get the record's files from context."""
+    record = (context or {}).get('record', {})
+    return record.get('_files', missing)
+
+
 def get_id(obj, context):
     """Get record id."""
     pid = context.get('pid')
@@ -35,10 +42,12 @@ def get_id(obj, context):
 
 
 class InvenioRecordMetadataSchemaV1Mixin(Schema):
-    schema = SanitizedUnicode(required=False, attribute='$schema', **load_dump('$schema'))
-    _bucket = fields.String(required=False)
-    _files = fields.Raw(dump_only=True)
-    id = fields.String(required=False)
+    _schema = GenFunction(
+        attribute="$schema",
+        data_key="$schema",
+        deserialize=schema_from_context,  # to be added only when loading
+    )
+    id = PersistentIdentifier()
 
     @pre_load
     def handle_load(self, instance, **kwargs):
@@ -64,5 +73,11 @@ class InvenioRecordMetadataSchemaV1Mixin(Schema):
 class InvenioRecordSchemaV1Mixin(Schema):
     """Invenio record"""
 
-    id = fields.String(required=True)
+    id = PersistentIdentifier()
     metadata = fields.Nested(InvenioRecordMetadataSchemaV1Mixin, required=False)
+    created = fields.Str(dump_only=True)
+    revision = fields.Integer(dump_only=True)
+    updated = fields.Str(dump_only=True)
+    links = fields.Dict(dump_only=True)
+    files = GenFunction(
+        serialize=files_from_context, deserialize=files_from_context)
