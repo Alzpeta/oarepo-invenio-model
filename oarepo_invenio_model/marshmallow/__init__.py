@@ -9,10 +9,33 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_records_rest.schemas.fields import GenFunction, PersistentIdentifier
+from invenio_records_rest.schemas.fields import GenFunction
+from invenio_records_rest.schemas.fields.persistentidentifier import pid_from_context
 from invenio_rest.serializer import BaseSchema as Schema
 # noinspection PyUnusedLocal
 from marshmallow import fields, missing, pre_load
+
+
+def pid_from_context_or_data(value, context, **kwargs):
+    """Get PID from marshmallow context."""
+    pid = (context or {}).get('pid')
+    if pid is None:
+        return value
+    else:
+        return pid.pid_value
+
+
+class PersistentIdentifier(GenFunction):
+    """Field to handle PersistentIdentifiers in records.
+
+    .. versionadded:: 1.2.0
+    """
+
+    def __init__(self, *args, **kwargs):
+        """Initialize field."""
+        super(PersistentIdentifier, self).__init__(
+            serialize=pid_from_context, deserialize=pid_from_context_or_data,
+            *args, **kwargs)
 
 
 def schema_from_context(_, context):
@@ -40,10 +63,9 @@ def get_id(obj, context):
 
 
 class InvenioRecordMetadataSchemaV1Mixin(Schema):
-    _schema = GenFunction(
+    _schema = fields.String(
         attribute="$schema",
         data_key="$schema",
-        deserialize=schema_from_context,  # to be added only when loading
     )
     id = PersistentIdentifier()
 
@@ -51,31 +73,4 @@ class InvenioRecordMetadataSchemaV1Mixin(Schema):
     def handle_load(self, instance, **kwargs):
         instance.pop('_files', None)
 
-        #
-        # modified handling id from default invenio way:
-        #
-        # we need to use the stored id in dump (in case the object
-        # is referenced, the id should be the stored one, not the context one)
-        #
-        # for data loading, we need to overwrite the id by the context - to be sure no one
-        # is trying to overwrite the id
-        #
-        id_ = get_id(instance, self.context)
-        if id_ is not missing:
-            instance['id'] = str(id_)
-        else:
-            instance.pop('id', None)
         return instance
-
-
-class InvenioRecordSchemaV1Mixin(Schema):
-    """Invenio record"""
-
-    id = PersistentIdentifier()
-    metadata = fields.Nested(InvenioRecordMetadataSchemaV1Mixin, required=False)
-    created = fields.Str(dump_only=True)
-    revision = fields.Integer(dump_only=True)
-    updated = fields.Str(dump_only=True)
-    links = fields.Dict(dump_only=True)
-    files = GenFunction(
-        serialize=files_from_context, deserialize=files_from_context)

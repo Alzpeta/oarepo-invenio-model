@@ -12,6 +12,7 @@ install_requires = [
 
 tests_require = [
     'pytest>=4.6.3',
+    'oarepo-mapping-includes'
 ]
 
 extras_require = {
@@ -30,12 +31,12 @@ setup_requires = [
 ]
 
 g = {}
-with open(os.path.join('invenio_oarepo_invenio_model', 'version.py'), 'rt') as fp:
+with open(os.path.join('oarepo_invenio_model', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
 
 setup(
-    name="invenio_oarepo_invenio_model",
+    name="oarepo_invenio_model",
     version=version,
     url="https://github.com/oarepo/invenio_oarepo_invenio_model",
     license="MIT",
@@ -43,13 +44,13 @@ setup(
     author_email="miroslav.simek@vscht.cz",
     description="Invenio data model for OARepo",
     zip_safe=False,
-    packages=['invenio_oarepo_invenio_model'],
+    packages=['oarepo_invenio_model'],
     entry_points={
-        'invenio_oarepo_mapping_includes': [
-            'invenio_oarepo_invenio_model=invenio_oarepo_invenio_model.included_mappings'
+        'oarepo_mapping_includes': [
+            'oarepo_invenio_model=oarepo_invenio_model.included_mappings'
         ],
         'invenio_jsonschemas.schemas': [
-            'invenio_oarepo_invenio_model = invenio_oarepo_invenio_model.jsonschemas'
+            'oarepo_invenio_model = oarepo_invenio_model.jsonschemas'
         ],
     },
     include_package_data=True,
