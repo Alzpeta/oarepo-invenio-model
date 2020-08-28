@@ -1,5 +1,4 @@
 from invenio_records.api import Record
-
 from oarepo_validate import MarshmallowValidatedRecordMixin, SchemaKeepingRecordMixin
 
 from .constants import SAMPLE_ALLOWED_SCHEMAS, SAMPLE_PREFERRED_SCHEMA
