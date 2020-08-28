@@ -23,12 +23,12 @@
 # SOFTWARE.
 #
 
-"""Version information for invenio_oarepo_invenio_model repository.
+"""Version information for oarepo_invenio_model repository.
 
-This file is imported by ``invenio_oarepo_invenio_model.__init__``,
+This file is imported by ``oarepo_invenio_model.__init__``,
 and parsed by ``setup.py``.
 """
 
 from __future__ import absolute_import, print_function
 
-__version__ = '2.0.0'
+__version__ = '2.0.1'

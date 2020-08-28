@@ -12,5 +12,5 @@ from __future__ import absolute_import, print_function
 
 def test_version():
     """Test version import."""
-    from invenio_oarepo_invenio_model import __version__
+    from oarepo_invenio_model import __version__
     assert __version__

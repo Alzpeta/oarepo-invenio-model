@@ -1,6 +1,5 @@
 {
   "InvenioRecord": {
-    "type": "nested",
     "properties": {
       "$schema": {
         "type": "keyword"

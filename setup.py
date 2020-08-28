@@ -4,14 +4,18 @@ import os
 
 from setuptools import setup
 
-readme = open('README.rst').read()
-OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.1.1')
+readme = open('README.md').read()
+history = open('CHANGES.md').read()
+OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.2.1')
 
 install_requires = [
+    'marshmallow',
+    'flask'
 ]
 
 tests_require = [
     'pytest>=4.6.3',
+    'oarepo-mapping-includes',
 ]
 
 extras_require = {
@@ -23,6 +27,9 @@ extras_require = {
         *tests_require,
         'oarepo[tests-es7]~={version}'.format(
             version=OAREPO_VERSION)],
+    'validate': [
+        'oarepo-validate'
+    ]
 }
 
 setup_requires = [
@@ -30,26 +37,28 @@ setup_requires = [
 ]
 
 g = {}
-with open(os.path.join('invenio_oarepo_invenio_model', 'version.py'), 'rt') as fp:
+with open(os.path.join('oarepo_invenio_model', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
 
 setup(
-    name="invenio_oarepo_invenio_model",
+    name="oarepo_invenio_model",
     version=version,
     url="https://github.com/oarepo/invenio_oarepo_invenio_model",
     license="MIT",
     author="Miroslav Simek",
     author_email="miroslav.simek@vscht.cz",
     description="Invenio data model for OARepo",
+    long_description=readme + '\n\n' + history,
+    long_description_content_type='text/markdown',
     zip_safe=False,
-    packages=['invenio_oarepo_invenio_model'],
+    packages=['oarepo_invenio_model'],
     entry_points={
-        'invenio_oarepo_mapping_includes': [
-            'invenio_oarepo_invenio_model=invenio_oarepo_invenio_model.included_mappings'
+        'oarepo_mapping_includes': [
+            'oarepo_invenio_model=oarepo_invenio_model.included_mappings'
         ],
         'invenio_jsonschemas.schemas': [
-            'invenio_oarepo_invenio_model = invenio_oarepo_invenio_model.jsonschemas'
+            'oarepo_invenio_model = oarepo_invenio_model.jsonschemas'
         ],
     },
     include_package_data=True,
