@@ -15,7 +15,8 @@ install_requires = [
 
 tests_require = [
     'pytest>=4.6.3',
-    'oarepo-mapping-includes'
+    'oarepo-mapping-includes',
+    'oarepo-validate'
 ]
 
 extras_require = {
