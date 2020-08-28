@@ -9,6 +9,8 @@ history = open('CHANGES.md').read()
 OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.1.1')
 
 install_requires = [
+    'marshmallow',
+    'flask'
 ]
 
 tests_require = [
