@@ -6,7 +6,7 @@ from setuptools import setup
 
 readme = open('README.md').read()
 history = open('CHANGES.md').read()
-OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.1.1')
+OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.2.1')
 
 install_requires = [
     'marshmallow',
