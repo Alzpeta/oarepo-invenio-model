@@ -4,7 +4,8 @@ import os
 
 from setuptools import setup
 
-readme = open('README.rst').read()
+readme = open('README.md').read()
+history = open('CHANGES.md').read()
 OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.1.1')
 
 install_requires = [
@@ -43,6 +44,8 @@ setup(
     author="Miroslav Simek",
     author_email="miroslav.simek@vscht.cz",
     description="Invenio data model for OARepo",
+    long_description=readme + '\n\n' + history,
+    long_description_content_type='text/markdown',
     zip_safe=False,
     packages=['oarepo_invenio_model'],
     entry_points={

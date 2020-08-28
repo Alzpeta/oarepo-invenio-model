@@ -38,28 +38,28 @@ class PersistentIdentifier(GenFunction):
             *args, **kwargs)
 
 
-def schema_from_context(_, context):
-    """Get the record's schema from context."""
-    record = (context or {}).get('record', {})
-    return record.get("_schema", missing)
-
-
-def bucket_from_context(_, context):
-    """Get the record's bucket from context."""
-    record = (context or {}).get('record', {})
-    return record.get('_bucket', missing)
-
-
-def files_from_context(_, context):
-    """Get the record's files from context."""
-    record = (context or {}).get('record', {})
-    return record.get('_files', missing)
-
-
-def get_id(obj, context):
-    """Get record id."""
-    pid = context.get('pid')
-    return pid.pid_value if pid else missing
+# def schema_from_context(_, context):
+#     """Get the record's schema from context."""
+#     record = (context or {}).get('record', {})
+#     return record.get("_schema", missing)
+#
+#
+# def bucket_from_context(_, context):
+#     """Get the record's bucket from context."""
+#     record = (context or {}).get('record', {})
+#     return record.get('_bucket', missing)
+#
+#
+# def files_from_context(_, context):
+#     """Get the record's files from context."""
+#     record = (context or {}).get('record', {})
+#     return record.get('_files', missing)
+#
+#
+# def get_id(obj, context):
+#     """Get record id."""
+#     pid = context.get('pid')
+#     return pid.pid_value if pid else missing
 
 
 class InvenioRecordMetadataSchemaV1Mixin(Schema):
