@@ -67,11 +67,11 @@ You can extense your schema with Invenio base model schema by inheriting from `I
 class SampleSchemaV1(InvenioRecordMetadataSchemaV1Mixin):
     title = fields.String(validate=validate.Length(min=5), required=True)
 ```
-  [image]: https://img.shields.io/github/license/oarepo/invenio-oarepo-invenio-model.svg
-  [1]: https://github.com/oarepo/invenio-oarepo-invenio-model/blob/master/LICENSE
-  [2]: https://img.shields.io/travis/oarepo/invenio-oarepo-invenio-model.svg
-  [3]: https://travis-ci.org/oarepo/invenio-oarepo-invenio-model
-  [4]: https://img.shields.io/coveralls/oarepo/invenio-oarepo-invenio-model.svg
-  [5]: https://coveralls.io/r/oarepo/invenio-oarepo-invenio-model
-  [6]: https://img.shields.io/pypi/v/invenio-oarepo-dc.svg
-  [7]: https://pypi.org/pypi/invenio-oarepo-dc
+  [image]: https://img.shields.io/github/license/oarepo/oarepo-invenio-model.svg
+  [1]: https://github.com/oarepo/oarepo-invenio-model/blob/master/LICENSE
+  [2]: https://img.shields.io/travis/oarepo/oarepo-invenio-model.svg
+  [3]: https://travis-ci.org/oarepo/oarepo-invenio-model
+  [4]: https://img.shields.io/coveralls/oarepo/oarepo-invenio-model.svg
+  [5]: https://coveralls.io/r/oarepo/oarepo-invenio-model
+  [6]: https://img.shields.io/pypi/v/oarepo-invenio-model.svg
+  [7]: https://pypi.org/pypi/oarepo-invenio-model
