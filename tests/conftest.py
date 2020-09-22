@@ -20,9 +20,8 @@ from invenio_rest import InvenioREST
 from invenio_search import InvenioSearch
 from invenio_search.cli import destroy, init
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
-from sqlalchemy_utils import create_database, database_exists
-
 from sample.ext import SampleExt
+from sqlalchemy_utils import create_database, database_exists
 
 
 @pytest.fixture()

@@ -3,10 +3,11 @@ from uuid import uuid1
 import pytest
 from invenio_pidstore.models import PersistentIdentifier
 from marshmallow import ValidationError
-
-from oarepo_invenio_model.marshmallow import InvenioRecordMetadataSchemaV1Mixin, InvenioRecordMetadataFilesMixin
+from oarepo_invenio_model.marshmallow import (
+    InvenioRecordMetadataFilesMixin,
+    InvenioRecordMetadataSchemaV1Mixin,
+)
 from tests.helpers import marshmallow_load
-
 
 # def test_load_no_id():
 #     with pytest.raises(ValidationError):

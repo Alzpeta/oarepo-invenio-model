@@ -13,7 +13,7 @@ from invenio_records_rest.schemas.fields import GenFunction
 from invenio_records_rest.schemas.fields.persistentidentifier import pid_from_context
 from invenio_rest.serializer import BaseSchema as Schema
 # noinspection PyUnusedLocal
-from marshmallow import fields, missing, pre_load, RAISE, INCLUDE
+from marshmallow import INCLUDE, RAISE, fields, missing, pre_load
 
 
 def pid_from_context_or_data(value, context, **kwargs):
