@@ -13,7 +13,7 @@ from invenio_records_rest.schemas.fields import GenFunction
 from invenio_records_rest.schemas.fields.persistentidentifier import pid_from_context
 from invenio_rest.serializer import BaseSchema as Schema
 # noinspection PyUnusedLocal
-from marshmallow import fields, missing, pre_load
+from marshmallow import INCLUDE, RAISE, fields, missing, pre_load
 
 
 def pid_from_context_or_data(value, context, **kwargs):
@@ -69,8 +69,14 @@ class InvenioRecordMetadataSchemaV1Mixin(Schema):
     )
     id = PersistentIdentifier()
 
-    @pre_load
-    def handle_load(self, instance, **kwargs):
-        instance.pop('_files', None)
 
-        return instance
+class FileSchema(Schema):
+    class Meta:
+        unknown = INCLUDE
+
+
+class InvenioRecordMetadataFilesMixin(Schema):
+    _files = fields.Nested(FileSchema, many=True, data_key='_files', required=False)
+    _bucket = fields.String(required=False)
+
+
