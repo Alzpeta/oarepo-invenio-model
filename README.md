@@ -58,7 +58,7 @@ Use `oarepo-mapping-includes` library for extanding invenio base record model ma
   }
 }
 ```
- 
+
 Marshmallow
 -----------
 You can extense your schema with Invenio base model schema by inheriting from `InvenioRecordMetadataSchemaV1Mixin`.
@@ -72,6 +72,6 @@ class SampleSchemaV1(InvenioRecordMetadataSchemaV1Mixin):
   [2]: https://img.shields.io/travis/oarepo/oarepo-invenio-model.svg
   [3]: https://travis-ci.org/oarepo/oarepo-invenio-model
   [4]: https://img.shields.io/coveralls/oarepo/oarepo-invenio-model.svg
-  [5]: https://coveralls.io/r/oarepo/oarepo-invenio-model
+  [5]: https://coveralls.io/github/oarepo/oarepo-invenio-model
   [6]: https://img.shields.io/pypi/v/oarepo-invenio-model.svg
   [7]: https://pypi.org/pypi/oarepo-invenio-model
