@@ -9,6 +9,7 @@ from oarepo_invenio_model.marshmallow import (
 )
 from tests.helpers import marshmallow_load
 
+
 # def test_load_no_id():
 #     with pytest.raises(ValidationError):
 #         marshmallow_load(InvenioRecordSchemaV1Mixin(), {})
@@ -27,13 +28,13 @@ def test_load_id_in_context():
            }
 
 
-def test_load_files():
-    pid = PersistentIdentifier(object_uuid=uuid1(), pid_value='1')
-    assert marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(context={
-        'pid': pid
-    }), {'_files': []}) == {
-               'id': pid.pid_value
-           }
+# def test_load_files():
+#     pid = PersistentIdentifier(object_uuid=uuid1(), pid_value='1')
+#     assert marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(context={
+#         'pid': pid
+#     }), {'_files': []}) == {
+#                'id': pid.pid_value
+#            }
 
 
 def test_metadata():
