@@ -19,5 +19,5 @@ class InheritedSchemaRecordMixin:
     def validate(self, **kwargs):
         return super().validate(**{
             **kwargs,
-            'cls': AllOfDraft7Validator
+            'validator': AllOfDraft7Validator
         })
