@@ -13,6 +13,7 @@ install_requires = [
 ]
 
 tests_require = [
+    'pytest-invenio[docs]==1.3.4',         # hack
     'pytest>=4.6.3',
     'oarepo-mapping-includes',
 ]
