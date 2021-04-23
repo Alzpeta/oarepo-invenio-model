@@ -2,7 +2,7 @@
 """Setup module for flask taxonomy."""
 import os
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 readme = open('README.md').read()
 history = open('CHANGES.md').read()
@@ -16,6 +16,7 @@ tests_require = [
     'pytest-invenio[docs]==1.3.4',         # hack
     'pytest>=4.6.3',
     'oarepo-mapping-includes',
+    'oarepo-validate'
 ]
 
 extras_require = {
