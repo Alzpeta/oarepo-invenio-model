@@ -25,6 +25,9 @@ extras_require = {
         'oarepo[tests]'],
     'validate': [
         'oarepo-validate'
+    ],
+    'build': [
+        'oarepo-model-builder'
     ]
 }
 
@@ -56,6 +59,9 @@ setup(
         'invenio_jsonschemas.schemas': [
             'oarepo_invenio_model = oarepo_invenio_model.jsonschemas'
         ],
+        'oarepo_model_builder.datamodels': [
+            'oarepo_invenio_model = oarepo_invenio_model.datamodels'
+        ]
     },
     include_package_data=True,
     setup_requires=setup_requires,
