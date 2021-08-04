@@ -19,13 +19,12 @@ from invenio_records_rest.views import create_blueprint_from_app
 from invenio_rest import InvenioREST
 from invenio_search import InvenioSearch
 from invenio_search.cli import destroy, init
-from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from oarepo_validate.ext import OARepoValidate
 from sample.ext import SampleExt
 from sqlalchemy_utils import create_database, database_exists
 
 
-@pytest.fixture()
+@pytest.yield_fixture()
 def base_app():
     """Flask applicat-ion fixture."""
     instance_path = os.path.join(sys.prefix, 'var', 'test-instance')
@@ -75,7 +74,6 @@ def app(base_app):
     InvenioPIDStore(base_app)
     base_app.url_map.converters['pid'] = PIDConverter
     SampleExt(base_app)
-    OARepoMappingIncludesExt(base_app)
 
     base_app.register_blueprint(create_blueprint_from_app(base_app))
 

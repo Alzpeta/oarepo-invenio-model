@@ -8,14 +8,9 @@ readme = open('README.md').read()
 history = open('CHANGES.md').read()
 
 install_requires = [
-    'marshmallow',
-    'flask'
 ]
 
 tests_require = [
-    'pytest-invenio[docs]==1.3.4',         # hack
-    'pytest>=4.6.3',
-    'oarepo-mapping-includes',
     'oarepo-validate'
 ]
 
@@ -23,8 +18,8 @@ extras_require = {
     'tests': [
         *tests_require,
         'oarepo[tests]'],
-    'validate': [
-        'oarepo-validate'
+    'build': [
+        'oarepo-model-builder'
     ]
 }
 
@@ -56,6 +51,9 @@ setup(
         'invenio_jsonschemas.schemas': [
             'oarepo_invenio_model = oarepo_invenio_model.jsonschemas'
         ],
+        'oarepo_model_builder.datamodels': [
+            'oarepo_invenio_model = oarepo_invenio_model.datamodels'
+        ]
     },
     include_package_data=True,
     setup_requires=setup_requires,
