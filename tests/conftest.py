@@ -24,7 +24,7 @@ from sample.ext import SampleExt
 from sqlalchemy_utils import create_database, database_exists
 
 
-@pytest.fixture()
+@pytest.yield_fixture()
 def base_app():
     """Flask applicat-ion fixture."""
     instance_path = os.path.join(sys.prefix, 'var', 'test-instance')
