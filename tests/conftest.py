@@ -116,4 +116,3 @@ def prepare_es(app, db):
     result = runner.invoke(init)
     if result.exit_code:
         print(result.output, file=sys.stderr)
-    assert result.exit_code == 0
