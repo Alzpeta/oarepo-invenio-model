@@ -67,7 +67,7 @@ class InvenioRecordMetadataSchemaV1Mixin(Schema):
         attribute="$schema",
         data_key="$schema",
     )
-    id = PersistentIdentifier()
+    InvenioID = PersistentIdentifier()
 
 
 class FileSchema(Schema):

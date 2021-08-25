@@ -4,7 +4,7 @@
       "$schema": {
         "type": "keyword"
       },
-      "id": {
+      "InvenioID": {
         "type": "keyword"
       },
       "_created": {

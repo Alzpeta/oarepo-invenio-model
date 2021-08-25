@@ -16,7 +16,7 @@ from tests.helpers import marshmallow_load
 
 
 def test_load_no_id_in_context():
-    marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(), {'id': '1'}) == {}
+    marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(), {'InvenioID': '1'}) == {}
 
 
 def test_load_id_in_context():
@@ -24,7 +24,7 @@ def test_load_id_in_context():
     assert marshmallow_load(InvenioRecordMetadataSchemaV1Mixin(context={
         'pid': pid
     }), {}) == {
-               'id': pid.pid_value
+               'InvenioID': pid.pid_value
            }
 
 

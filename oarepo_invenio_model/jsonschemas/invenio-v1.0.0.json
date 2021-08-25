@@ -1,23 +1,23 @@
 {
   "definitions": {
     "InvenioRecord": {
-      "$id": "#invenioRecord",
+      "title": "Internal Invenio record fields v1.0.0",
       "type": "object",
       "properties": {
         "$schema": {
-          "description": "JSONSchema for the record",
+          "description": "JSONSchema id of the record",
           "type": "string"
         },
-        "id": {
-        "description": "Invenio record identifier.",
+        "InvenioID": {
+        "description": "Primary Invenio record identifier.",
         "type": "string"
         },
         "_bucket": {
-          "description": "UUID of the deposit bucket.",
+          "description": "UUID of the internal files deposit bucket.",
           "type": "string"
         },
         "_files": {
-          "description": "Describe information needed for files in records.",
+          "description": "Describes information needed for files in records.",
           "type": "array",
           "items": {
             "description": "Describes the information of a single file in the record.",
@@ -54,7 +54,7 @@
       },
       "required": [
         "$schema",
-        "id"
+        "InvenioID"
       ]
     }
   }
