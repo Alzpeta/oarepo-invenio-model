@@ -11,7 +11,8 @@ install_requires = [
 ]
 
 tests_require = [
-    'oarepo-validate'
+    'oarepo-validate',
+    'elasticsearch==7.13.4'
 ]
 
 extras_require = {
