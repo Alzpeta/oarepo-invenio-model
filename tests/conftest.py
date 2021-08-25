@@ -51,7 +51,7 @@ def base_app():
         SEARCH_INDEX_PREFIX='test-',
         JSONSCHEMAS_HOST='localhost:5000',
         SEARCH_ELASTIC_HOSTS=os.environ.get('SEARCH_ELASTIC_HOSTS', None),
-        PIDSTORE_RECID_FIELD='id'
+        PIDSTORE_RECID_FIELD='InvenioID'
     )
 
     InvenioDB(app_)
@@ -106,13 +106,13 @@ def db(app):
     _db.drop_all()
 
 
-@pytest.fixture()
-def prepare_es(app, db):
-    runner = app.test_cli_runner()
-    result = runner.invoke(destroy, ['--yes-i-know', '--force'])
-    if result.exit_code:
-        print(result.output, file=sys.stderr)
-    assert result.exit_code == 0
-    result = runner.invoke(init)
-    if result.exit_code:
-        print(result.output, file=sys.stderr)
+# @pytest.fixture()
+# def prepare_es(app, db):
+#     runner = app.test_cli_runner()
+#     result = runner.invoke(destroy, ['--yes-i-know', '--force'])
+#     if result.exit_code:
+#         print(result.output, file=sys.stderr)
+#     assert result.exit_code == 0
+#     result = runner.invoke(init)
+#     if result.exit_code:
+#         print(result.output, file=sys.stderr)

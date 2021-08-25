@@ -8,7 +8,7 @@
           "description": "JSONSchema id of the record",
           "type": "string"
         },
-        "id": {
+        "InvenioID": {
         "description": "Primary Invenio record identifier.",
         "type": "string"
         },
@@ -54,7 +54,7 @@
       },
       "required": [
         "$schema",
-        "id"
+        "InvenioID"
       ]
     }
   }
